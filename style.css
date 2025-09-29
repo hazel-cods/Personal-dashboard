@@ -1,0 +1,180 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: black;
+  color: lightcoral;
+}
+
+header{
+  background: none;
+  height: 15vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  color: lightcoral;
+  align-items: center;
+
+  .div_header{
+     border: 0px solid blue;
+     width: 30%;
+  }
+
+  h1{
+    font-weight: bold;
+    font-size: 40px;
+  }
+}
+.main_section{
+  border: 0px solid blue;
+  width: 100%;
+  height: 80vh;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.section1{
+  border: 0px solid green;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .div1{
+  border: 1px solid palevioletred;
+  height: 40%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  display: flex;
+  background: url(/photos/div1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  }
+
+  .div2{
+  border: 1px solid lightcoral;
+  display: flex;
+  height: 60%;
+  justify-content: center;
+  align-items: top;
+  border-radius: 10px;
+  padding: 10px;
+  background: url(/photos/div2.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+
+  }
+}
+
+.section2{
+  border: 0px solid white;
+  width: 40%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .maindiv{
+    border: 1px solid lightcoral;
+    height: 80%;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    background: url(/photos/div5.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+  
+
+
+  }
+ 
+}
+
+
+
+
+  .section3{
+    border: 0px solid green;
+    width: 35%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  
+    
+  
+    .listbox{
+      border: 1px solid lightcoral;
+      border-radius: 10px;
+      height: 90%;
+      align-items: top ;
+      justify-content: center;
+      padding: 10px;
+      background: url(/photos/div4.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      
+    
+    }
+  
+  }
+
+.div_btn{
+  border: 0px solid white;
+  width: 60%;
+  justify-content: right;
+  align-items: right;
+  display: flex;
+  color: black;
+
+  .add_btn{
+    width: 40%;
+    background: lightcoral;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+
+  }
+
+  .clear_btn{
+    width: 40%;
+    background: lightcoral;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+
+  }
+
+
+  
+
+
+  .dark_btn{
+    width: 25%;
+    height: 5vh;
+    padding: 3px;
+    margin-right: 5%;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    border: 1px solid lightcoral;
+    color: lightcoral;
+
+  }
+}
+
+
+
