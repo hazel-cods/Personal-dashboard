@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Digital Clock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#0f1724;
+      --accent:#00e6a8;
+      --muted:#9aa4b2;
+    }
+
+    html,body{ height:100%; margin:0; font-family: 'Orbitron', system-ui, sans-serif; background: linear-gradient(160deg,#071025 0%, #081426 60%); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+
+    .clock {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      backdrop-filter: blur(6px);
+      border-radius: 18px;
+      padding: 28px 36px;
+      box-shadow: 0 10px 30px rgba(3,8,18,0.6);
+      text-align:center;
+      min-width:300px;
+    }
+
+    .time {
+      font-size: 4.4rem;
+      letter-spacing: 6px;
+      line-height: 1;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      align-items:baseline;
+    }
+
+    .segment { display:inline-block; min-width: 1ch; }
+
+    .ampm {
+      font-size: 1.05rem;
+      color:var(--muted);
+      margin-left:8px;
+      transform: translateY(-6px);
+      font-family: system-ui, sans-serif;
+    }
+
+    .date {
+      margin-top:10px;
+      font-size:0.95rem;
+      color:var(--muted);
+      letter-spacing:0.6px;
+    }
+
+    .controls {
+      margin-top:14px;
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .btn {
+      background:transparent;
+      border:1px solid rgba(160,220,190,0.12);
+      color:var(--muted);
+      padding:6px 10px;
+      border-radius:10px;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+
+    .btn.active {
+      color:var(--bg);
+      background:var(--accent);
+      border-color:transparent;
+    }
+
+    @media (max-width:420px){
+      .time{ font-size:3rem; gap:8px; }
+      .clock{ padding:20px; min-width:240px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" role="application" aria-label="Digital clock">
+    <div class="time" id="time">
+      <span class="segment" id="hours">00</span>
+      <span>:</span>
+      <span class="segment" id="minutes">00</span>
+      <span>:</span>
+      <span class="segment" id="seconds">00</span>
+      <span class="ampm" id="ampm">AM</span>
+    </div>
+
+    <div class="date" id="date">Monday, January 1, 2025</div>
+
+    <div class="controls" aria-hidden="false">
+      <button class="btn active" id="btn12">12-hour</button>
+      <button class="btn" id="btn24">24-hour</button>
+    </div>
+  </div>
+
+  <script>
+    // Configuration: default 12-hour mode
+    let use24Hour = false;
+
+    // Elements
+    const elHours = document.getElementById('hours');
+    const elMinutes = document.getElementById('minutes');
+    const elSeconds = document.getElementById('seconds');
+    const elAMPM = document.getElementById('ampm');
+    const elDate = document.getElementById('date');
+    const btn12 = document.getElementById('btn12');
+    const btn24 = document.getElementById('btn24');
+
+    // Toggle buttons
+    btn12.addEventListener('click', () => { use24Hour = false; btn12.classList.add('active'); btn24.classList.remove('active'); updateClock(); });
+    btn24.addEventListener('click', () => { use24Hour = true; btn24.classList.add('active'); btn12.classList.remove('active'); updateClock(); });
+
+    // Formats with leading zero (digit-by-digit safe)
+    function two(n){
+      n = Number(n);
+      return (n < 10 ? '0' + n : '' + n);
+    }
+
+    // Update clock once per second
+    function updateClock(){
+      const now = new Date();
+
+      let h = now.getHours();
+      const m = now.getMinutes();
+      const s = now.getSeconds();
+
+      if (!use24Hour){
+        elAMPM.textContent = h >= 12 ? 'PM' : 'AM';
+        h = h % 12;
+        if (h === 0) h = 12;
+      } else {
+        elAMPM.textContent = ''; // hide AM/PM in 24-hour mode
+      }
+
+      // Write digit-by-digit (safe arithmetic)
+      elHours.textContent = two(h);
+      elMinutes.textContent = two(m);
+      elSeconds.textContent = two(s);
+
+      // Date: Weekday, Month Day, Year
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const weekday = days[now.getDay()];
+      const month = months[now.getMonth()];
+      const day = now.getDate();
+      const year = now.getFullYear();
+      elDate.textContent = `${weekday}, ${month} ${day}, ${year}`;
+    }
+
+    // Start clock and ensure alignment to second (first call immediately)
+    updateClock();
+    // Align next ticks to real seconds instead of drifting
+    setTimeout(function(){
+      updateClock();
+      setInterval(updateClock, 1000);
+    }, 1000 - (new Date()).getMilliseconds());
+  </script>
+</body>
+</html>
